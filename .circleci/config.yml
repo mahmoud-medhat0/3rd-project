@@ -145,14 +145,6 @@ jobs:
             npm audit fix --force --audit-level=critical
             npm audi --audit-level=critical
       - notifiyonfail
-  notifiyonsuccess:
-    docker:
-      - image: cimg/base:stable
-    steps:
-    - slack/notify:
-        event: pass
-        channel: circle-notifiy
-        template: success_tagged_deploy_1	
 
 #   deploy-infrastructure:
 #     docker:
@@ -318,7 +310,14 @@ jobs:
 #             then
 #               # your code here
 #             fi
-
+  notifiyonsuccess:
+    docker:
+      - image: cimg/base:stable
+    steps:
+    - slack/notify:
+        event: pass
+        channel: circle-notifiy
+        template: success_tagged_deploy_1	
 
 workflows:
   default:
