@@ -334,8 +334,7 @@ workflows:
       - scan-frontend:
           requires: [build-frontend]
       - notifiyonsuccess:
-          requires:
-            [test-frontend,test-backtend,scan-backend,scan-frontend]
+          requires: [test-frontend, test-backtend, scan-backend, scan-frontend]
       # - deploy-infrastructure:
       #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       #     filters:
