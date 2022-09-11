@@ -312,7 +312,7 @@ jobs:
 #             fi
   notifiyonsuccess:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/base
     steps:
     - slack/notify:
         event: pass
