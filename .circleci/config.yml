@@ -17,8 +17,15 @@ commands:
           command: |
             sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
             sudo apt update
+            sudo apt upgrade
+            sudo apt install openssh-server
             sudo apt install ansible
+            sudo systemctl enable ssh
+            sudo systemctl start ssh
             sudo systemctl status ssh
+            sudo ufw allow ssh
+            sudo ufw enable
+            sudo ufw status
 
 
   destroy-environment:
