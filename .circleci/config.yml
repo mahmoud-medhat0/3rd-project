@@ -20,9 +20,9 @@ commands:
             sudo apt upgrade
             sudo apt install openssh-server
             sudo apt install ansible
-            sudo systemctl enable ssh
-            sudo systemctl start ssh
-            sudo systemctl status ssh
+            sudo service enable ssh
+            sudo service start ssh
+            sudo service status ssh
             sudo ufw allow ssh
             sudo ufw enable
             sudo ufw status
