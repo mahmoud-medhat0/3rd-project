@@ -190,7 +190,7 @@ jobs:
       - checkout
       - install_ansible
       - sdd ssh keys:
-          fingerprint ["5e:57:33:1c:1a:08:55:1e:3c:76:7b:1a:97:42:54:ba"]
+          fingerprint: ["5e:57:33:1c:1a:08:55:1e:3c:76:7b:1a:97:42:54:ba"]
       - attach workspace:
           at: ~/
       - run:
