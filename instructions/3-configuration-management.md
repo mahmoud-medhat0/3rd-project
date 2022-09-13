@@ -17,7 +17,7 @@ At the very end of the pipeline, you will need to make a switch from the old inf
 
 1) Create a random string (e.g. `kk1j287dhjppmz437`) for use in next steps.
 2) Create an S3 Bucket with a name that combines "rdproject" and the random string (e.g. "rdproject-kk1j287dhjppmz437"). If S3 complains that the name is already taken, just choose another random string. The random string is to distinguish your bucket from other student buckets.
-3) Run our provided [Cloud Formation](https://github.com/udacity/cdond-c3-projectstarter/blob/master/.circleci/files/cloudfront.yml) template locally (for the Workflow ID parameter, use your random string).
+3) Run our provided [Cloud Formation](https://github.com/udacity/rdprojectstarter/blob/master/.circleci/files/cloudfront.yml) template locally (for the Workflow ID parameter, use your random string).
 
 Once that is done, subsequent executions of that template will modify the same CloudFront distribution to make the blue-to-green switch without fail.
 
@@ -54,7 +54,7 @@ In this phase, you will add CircleCI jobs that execute Cloud Formation templates
 ##### Create/Deploy Infrastructure
 
 - Find the job named `deploy-infrastructure` in your config file
-  - Add code to create your infrastructure using [CloudFormation templates](https://github.com/udacity/cdond-c3-projectstarter/tree/master/.circleci/files). Again, provide a screenshot demonstrating an appropriate job failure (failing for the right reasons). **[SCREENSHOT05]**
+  - Add code to create your infrastructure using [CloudFormation templates](https://github.com/udacity/rdprojectstarter/tree/master/.circleci/files). Again, provide a screenshot demonstrating an appropriate job failure (failing for the right reasons). **[SCREENSHOT05]**
 
 ![Job properly failing because of an error when creating infrastructure.](screenshots/SCREENSHOT05.png)
 
@@ -69,7 +69,7 @@ In this phase, you will add CircleCI jobs that execute Cloud Formation templates
     - Use a CloudFormation template to create a new S3 Bucket for your front-end.
     - Use the workflow id to mark the front-end infrastructure so that you can reference it easily later on.
     - Tag the front-end infrastructure so that it can be referenced later.
-  - Generate an inventory file for use with Ansible by using AWS CLI to append the newly created backend IP to the [provided](https://github.com/udacity/cdond-c3-projectstarter/blob/master/.circleci/ansible/inventory.txt) inventory file.
+  - Generate an inventory file for use with Ansible by using AWS CLI to append the newly created backend IP to the [provided](https://github.com/udacity/rdprojectstarter/blob/master/.circleci/ansible/inventory.txt) inventory file.
     - Persist the modified inventory file to the workspace so that we can use that file in future jobs.
   
 ##### Configure Infrastructure
@@ -190,7 +190,7 @@ Assuming the smoke test came back clean, we should have a relatively high level 
   - Select a docker image that is compatible with AWS CLI.
   - Create code that promotes our new front-end to production.
     - Install any needed dependencies
-    - Use a [CloudFormation template](https://github.com/udacity/cdond-c3-projectstarter/tree/master/.circleci/files) to change the origin of your CloudFront distribution to the new S3 bucket.
+    - Use a [CloudFormation template](https://github.com/udacity/rdprojectstarter/tree/master/.circleci/files) to change the origin of your CloudFront distribution to the new S3 bucket.
 - Provide a screenshot of the successful job. **[SCREENSHOT08]**
 
 ![Successful promotion job.](screenshots/SCREENSHOT08.png)

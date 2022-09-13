@@ -12,16 +12,16 @@ Instructions for how to get a copy of the project running on your local machine.
 
 Please watch the [video walkthrough of the starter code here](https://www.youtube.com/watch?v=ODLIAe28OJk).
 
-1. Clone the [starter code](https://github.com/udacity/cdond-c3-projectstarter) to your machine so that you can manipulate the files.
+1. Clone the [starter code](https://github.com/udacity/rdprojectstarter) to your machine so that you can manipulate the files.
 2. Push your code into a repository in your account in Github. You might consider making your repository public so that Circle CI will give you more credits to run builds ([more information here](https://circleci.com/open-source/)).
 
 ### Provided Cloud Formation Templates
 
-For your convenience, we have provided some CloudFormation templates that you can use throughout the deployment phase of your project. You can find those templates in [this folder](https://github.com/udacity/cdond-c3-projectstarter/tree/master/.circleci/files). 
+For your convenience, we have provided some CloudFormation templates that you can use throughout the deployment phase of your project. You can find those templates in [this folder](https://github.com/udacity/rdprojectstarter/tree/master/.circleci/files). 
 
 ### Intentionally Failing Jobs
 
-We left a scaffolded `config.yml` for you [here](https://github.com/udacity/cdond-c3-projectstarter/blob/master/.circleci/config.yml) to help you get started with CirlcCI's configuration. To call attention to unfinished jobs, we left some "non-zero error codes" (e.g. `exit 1`) for you to remove when you have finished implementing a job. 
+We left a scaffolded `config.yml` for you [here](https://github.com/udacity/rdprojectstarter/blob/master/.circleci/config.yml) to help you get started with CirlcCI's configuration. To call attention to unfinished jobs, we left some "non-zero error codes" (e.g. `exit 1`) for you to remove when you have finished implementing a job. 
 
 ### Compiling/Running Locally (Optional)
 
