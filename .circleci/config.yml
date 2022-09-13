@@ -22,9 +22,9 @@ commands:
             sudo apt install ansible
             sudo /etc/init.d/ssh start
             sudo /etc/init.d/ssh status
-            sudo ufw allow ssh
-            sudo ufw enable
-            sudo ufw status
+            # sudo ufw allow ssh
+            # sudo ufw enable
+            # sudo ufw status
 
 
   destroy-environment:
