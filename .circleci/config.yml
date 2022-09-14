@@ -229,7 +229,6 @@ jobs:
             # --- Run and save the migration output
             npm run migrations-win
             npm audit fix
-            cat .env
       - run:
           name: Send migration status to kvdb.io
           command: |
