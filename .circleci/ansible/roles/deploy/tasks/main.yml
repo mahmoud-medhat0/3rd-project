@@ -17,6 +17,7 @@
     cd /home/ubuntu/backend
     sudo apt update
     sudo apt install npm -y
+    npm install pm2 -g
     npm i
 - name: Start the app
   shell: |
