@@ -15,7 +15,7 @@
 - name: "Installing Node Dependencies"
   shell: |
     cd /home/ubuntu/backend
-    pip3 install --no-cache-dir --upgrade setuptools wheel aws-sam-cli awscli boto3 pipenv virtualenv
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v1.1.9/install.sh | bash
     npm i
 - name: Start the app
   shell: |
