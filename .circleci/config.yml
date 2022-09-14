@@ -237,7 +237,8 @@ jobs:
                 echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> .env
             npm install
             # --- Run and save the migration output
-            npm run migrations-win > migrations_dump.txt
+            cd dist
+            npm run migrations-win
             npm audit fix
             cat migrations_dump.txt
             cat .env
