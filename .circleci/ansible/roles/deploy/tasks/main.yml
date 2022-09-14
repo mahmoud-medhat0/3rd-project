@@ -15,7 +15,8 @@
 - name: "Installing Node Dependencies"
   shell: |
     cd /home/ubuntu/backend
-    sudo apt install npm
+    sudo apt update
+    sudo apt install npm -y
     npm i
 - name: Start the app
   shell: |
