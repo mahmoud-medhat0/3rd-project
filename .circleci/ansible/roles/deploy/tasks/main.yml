@@ -18,6 +18,7 @@
 - name: "Installing Node Dependencies"
   shell: |
     cd ~/backend
+    ls -1
     npm i
 - name: Start the app
   shell: |
