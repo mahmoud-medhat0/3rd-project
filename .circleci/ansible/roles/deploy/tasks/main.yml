@@ -17,7 +17,7 @@
     cd /home/ubuntu/backend
     sudo apt update
     sudo apt install npm -y
-    npm install pm2 -g
+    sudo npm install pm2 -g
     npm i
 - name: Start the app
   shell: |
@@ -29,6 +29,6 @@
     export TYPEORM_DATABASE=glee
     export TYPEORM_MIGRATIONS_DIR=./backend/dist/migrations
     export TYPEORM_MIGRATIONS=./backend/dist/migrations/*.ts
-    npm install pm2 -g
-    pm2 stop default
-    pm2 start -f /home/ubuntu/backend/dist/main.js
+    sudo npm install pm2 -g
+    sudo pm2 stop default
+    sudo pm2 start -f /home/ubuntu/backend/dist/main.js
