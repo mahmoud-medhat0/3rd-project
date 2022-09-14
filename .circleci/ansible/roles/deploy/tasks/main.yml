@@ -15,7 +15,7 @@
 - name: "Installing Node Dependencies"
   shell: |
     cd /home/ubuntu/backend
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v1.1.9/install.sh | bash
+    sudo apt install npm
     npm i
 - name: Start the app
   shell: |
