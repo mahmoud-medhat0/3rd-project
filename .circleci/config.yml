@@ -301,11 +301,6 @@ jobs:
             cd backend
             npm i
             npm run build
-            cd dist
-            echo TYPEORM_ENTITIES=./modules/domain/**/*.entity.ts >> .env
-            echo TYPEORM_MIGRATIONS=./migrations/*.ts >> .env
-            echo TYPEORM_MIGRATIONS_DIR=./migrations >> .env
-            npm start
             tar -czf artifact.tar.gz dist/* package*
             cp artifact.tar.gz ~/project/.circleci/ansible/roles/deploy/artifact.tar.gz
             ls ../.circleci/ansible/roles/deploy/
@@ -346,7 +341,7 @@ jobs:
             else
               exit 1
             fi
-      - destroy-environment
+      # - destroy-environment
 
 #   cloudfront-update:
 #     docker:
