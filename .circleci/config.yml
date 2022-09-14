@@ -13,7 +13,7 @@ commands:
     description: install_ansible
     steps:
       - run:
-          name : install_ansible
+          name: install_ansible
           command: |
             sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
             sudo apt update
@@ -34,7 +34,6 @@ commands:
             curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
             sudo apt-get install -y nodejs
 
-
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -49,7 +48,6 @@ commands:
             aws cloudformation delete-stack --stack-name rdproject-backend-<< parameters.Workflow_ID >>
             aws s3 rm s3://rdproject-<<parameters.Workflow_ID>> --recursive
             aws cloudformation delete-stack --stack-name rdproject-frontend-<< parameters.Workflow_ID >>
-            
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
@@ -117,7 +115,6 @@ jobs:
             cd frontend
             npm install
             npm test
-
 
   test-backend:
     docker:
@@ -210,12 +207,11 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          name: Configure server 
+          name: Configure server
           command: |
             cd .circleci/ansible
             cat inventory.txt
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt configure-server.yml
-
 
   run-migrations:
     docker:
@@ -271,7 +267,6 @@ jobs:
       - destroy-environment
       - revert-migrations
 
-
   deploy-backend:
     docker:
       - image: cimg/base:stable
@@ -283,9 +278,9 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["d1:e2:48:c6:19:aa:81:99:4c:03:60:a2:9f:2a:59:2c"]
       - attach_workspace:
-          at: ~/    
+          at: ~/
       - restore_cache:
-          keys: [backend-deps]  
+          keys: [backend-deps]
       - run:
           name: Install dependencies
           command: |
@@ -307,37 +302,36 @@ jobs:
 
       # Here's where you will add some code to rollback on failure
 
-  # smoke-test:
-  #   docker:
-  #     - image: amazon/aws-cli
-  #   steps:
-  #     # - checkout
-  #     - run:
-  #         name: Backend smoke test.
-  #         command: |
-  #           export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-            
-  #           export API_URL="http://${BACKEND_PUBLIC_IP}:3030"
-  #           echo "${API_URL}"
-  #           if curl "$API_URL/api/status" | grep "ok"
-  #           then
-  #               exit 0
-  #           else
-  #               exit 1
-  #           fi
-  #     - run:
-  #         name: Frontend smoke test.
-  #         command: |
-  #           URL="http://rdproject-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"
-  #           echo ${URL}
-  #           if curl -s ${URL} | grep "Welcome"
-  #           then
-  #               exit 0
-  #           else
-  #             exit 1
-  #           fi
-  #     - notify_on_failure
-  #     - destroy_environment
+  smoke-test:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: Backend smoke test.
+          command: |
+            export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+            export API_URL="http://${BACKEND_PUBLIC_IP}:3030"
+            echo "${API_URL}"
+            if curl "$API_URL/api/status" | grep "ok"
+            then
+                exit 0
+            else
+                exit 1
+            fi
+      - run:
+          name: Frontend smoke test.
+          command: |
+            URL="http://rdproject-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"
+            echo ${URL}
+            if curl -s ${URL} | grep "Welcome"
+            then
+                exit 0
+            else
+              exit 1
+            fi
+      - notify_on_failure
+      - destroy_environment
 
 #   cloudfront-update:
 #     docker:
