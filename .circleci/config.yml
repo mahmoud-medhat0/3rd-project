@@ -281,16 +281,6 @@ jobs:
       - restore_cache:
           keys: [backend-deps]
       - run:
-          name: set variables
-          command: |
-                echo NODE_ENV=production >> .env
-                echo TYPEORM_CONNECTION=postgres >> .env
-                echo TYPEORM_HOST=$TYPEORM_HOST >> .env
-                echo TYPEORM_PORT=$TYPEORM_PORT >> .env
-                echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> .env
-                echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> .env
-                echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> .env
-      - run:
           name: Install dependencies
           command: |
             cd backend
@@ -320,6 +310,14 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
+            cd backend/dist
+            export TYPEORM_ENTITIES=${TYPEORM_ENTITIES}
+            export TYPEORM_USERNAME=${TYPEORM_USERNAME}
+            export TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
+            export TYPEORM_DATABASE=${TYPEORM_DATABASE}
+            echo "${TYPEORM_HOST}"
+            export TYPEORM_HOST=${TYPEORM_HOST"}
+            node main.js
             export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
             export API_URL="http://${BACKEND_PUBLIC_IP}:3030"
