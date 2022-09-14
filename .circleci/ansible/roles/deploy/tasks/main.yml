@@ -1,28 +1,30 @@
----
-- name: Creates directory
+- name: Create Backend Directory
   file:
-    path: ~/web
+    path: /home/ubuntu/backend
     state: directory
 
-- name: Extract backend
+- copy:
+    src: ~/project/.circleci/ansible/roles/deploy/artifact.tar.gz
+    dest: /home/ubuntu/backend
+
+- name: Extract artifact.tar.gz to EC2 
   unarchive:
     src: artifact.tar.gz
-    dest: ~/web
+    dest: /home/ubuntu/backend
 
-- name: Executing node
+- name: "Installing Node Dependencies"
   shell: |
-    cd ~/web/backend
-    echo NODE_ENV=production >> .env
-    echo TYPEORM_CONNECTION=postgres >> .env
-    echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> .env
-    echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> .env
-    echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> .env
-    echo TYPEORM_HOST=$TYPEORM_HOST >> .env
-    echo TYPEORM_PORT=$TYPEORM_PORT >> .env
-    echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> .env
-    echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> .env
-    echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> .env
-    npm install
-    npm run build
+    cd /home/ubuntu/backend
+    npm i
+- name: Start the app
+  shell: |
+    export TYPEORM_ENTITIES=./backend/dist/modules/domain/**/*.entity{.ts,.js}
+    export TYPEORM_HOST=localhost
+    export TYPEORM_PORT=5532
+    export TYPEORM_USERNAME=postgres
+    export TYPEORM_PASSWORD=password
+    export TYPEORM_DATABASE=glee
+    export TYPEORM_MIGRATIONS_DIR=./backend/dist/migrations
+    export TYPEORM_MIGRATIONS=./backend/dist/migrations/*.ts
     pm2 stop default
-    pm2 start npm -- start
+    pm2 start -f /home/ubuntu/backend/dist/main.js
