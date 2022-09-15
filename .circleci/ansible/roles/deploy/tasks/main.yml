@@ -21,7 +21,8 @@
     npm i
 - name: Start the app
   shell: |
-    export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
+    export TYPEORM_ENTITIES=${TYPEORM_ENTITIES}
+    echo TYPEORM_ENTITIES
     export TYPEORM_HOST=rdproject2.cgu3cynp9k0j.us-east-1.rds.amazonaws.com
     export TYPEORM_PORT=5432
     export TYPEORM_USERNAME=postgres
@@ -29,6 +30,5 @@
     export TYPEORM_DATABASE=glee
     export TYPEORM_MIGRATIONS_DIR=./backend/dist/migrations
     export TYPEORM_MIGRATIONS=./backend/dist/migrations/*.ts
-    # sudo npm install pm2 -g
-    pm2 stop default
+    sudo npm install pm2 -g
     node /home/ubuntu/backend/dist/main.js
