@@ -332,7 +332,7 @@ jobs:
             echo "${API_URL}"
             export API_URL1="http://${BACKEND_PUBLIC_IP}:3030/api/status"
             echo "${API_URL1}"
-            sleep 5
+            sleep 6
             if curl ${API_URL1} | grep "ok"
             then
                 exit 0
