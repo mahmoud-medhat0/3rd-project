@@ -272,15 +272,13 @@ jobs:
           name: Get backend url
           command: |
             export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-            export API_URL=http://$BACKEND_PUBLIC_IP:3030 
+            echo "API_URL=http://$BACKEND_PUBLIC_IP:3030"
+            # Build the frontend
             cd frontend
-            echo $API_URL
-            echo "API_URL=http://${BACKEND_PUBLIC_IP}:3030"
-            echo "API_URL=http://${BACKEND_PUBLIC_IP}:3030" > .env
-            cat .env
+            echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
             npm install
             npm run build:prod
-            aws s3 cp dist s3://rdproject-${CIRCLE_WORKFLOW_ID:0:5} --recursive
+            aws s3 cp dist s3://rdproject-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # - destroy-environment
       # - revert-migrations
 
