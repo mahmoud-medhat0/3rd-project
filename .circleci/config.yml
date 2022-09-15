@@ -297,7 +297,7 @@ jobs:
             cd ~/project/
             cp artifact.tar.gz .circleci/ansible/roles/deploy_backend/files
             cd .circleci/ansible
-            ansible-playbook -i inventory.txt deploy-backend.yml
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt deploy-backend.yml
 
       # Here's where you will add some code to rollback on failure
 
