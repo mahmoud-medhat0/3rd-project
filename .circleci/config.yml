@@ -263,8 +263,8 @@ jobs:
             npm install
             npm run build:prod
             aws s3 cp dist s3://rdproject-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      - destroy-environment
-      - revert-migrations
+      # - destroy-environment
+      # - revert-migrations
 
   deploy-backend:
     docker:
@@ -331,7 +331,7 @@ jobs:
             else
               exit 1
             fi
-      - destroy-environment
+      # - destroy-environment
 
 #   cloudfront-update:
 #     docker:
