@@ -371,39 +371,39 @@ jobs:
       # Here's where yozu will add some code to rollback on failure
       - destroy-environment
       - revert-migrations
-#   cloudfront-update:
-#     docker:
-#       # Docker image here that supports AWS CLI
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Update cloudfront distribution
-#           command: |
-#             # your code here
-#       # Here's where you will add some code to rollback on failure
 
-# cleanup:
-#     docker:
-#       # Docker image here
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Get old stack workflow id
-#           command: |
-#             # your code here
-#             export OldWorkflowID="the id here"
-#             export STACKS=[] #put the list of stacks here
-#       - run:
-#           name: Remove old stacks and files
-#           command: |
-#             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
-#             then
-#               # your code here
-#             fi
+  cleanup:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Get old stacks
+          command: |
+            # Fetch the Old workflow ID  we export this workflow id from cloudformation cloudfront
+            export OldWorkflowID=$(curl https://kvdb.io/XCfqPucAjqwmdGZKRVq5rH/oldworkflow) 
+            echo OldWorkflowID: "${OldWorkflowID}"
+            echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
+            # Fetch the stack names          
+            export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+                    --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
+            echo Stack names: "${STACKS[@]}" 
+            if [[ "${CIRCLE_WORKFLOW_ID:0:7}" =~ "${OldWorkflowID}" ]]
+            then
+                echo " we are clear >"
+                curl -k -d ${CIRCLE_WORKFLOW_ID:0:7} https://kvdb.io/XCfqPucAjqwmdGZKRVq5rH/oldworkflow
+            else
+                curl -k -d ${CIRCLE_WORKFLOW_ID:0:7} https://kvdb.io/XCfqPucAjqwmdGZKRVq5rH/oldworkflow
+                aws cloudformation delete-stack --stack-name "rdproject-backend-${OldWorkflowID}"
+                aws cloudformation delete-stack --stack-name "rdproject-frontend-${OldWorkflowID}"
+                if [[ $(aws s3 rm "s3://rdproject-${OldWorkflowID}" --recursive) ]]
+                then
+                   aws cloudformation delete-stack --stack-name  "cloudfront-${OldWorkflowID}"
+                else
+                    echo "we are clear"
+                fi
+            fi
+
 workflows:
   default:
     jobs:
@@ -434,5 +434,5 @@ workflows:
           requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
           requires: [smoke-test]
-      # - cleanup:
-      #     requires: [cloudfront-update]
+      - cleanup:
+          requires: [cloudfront-update]
