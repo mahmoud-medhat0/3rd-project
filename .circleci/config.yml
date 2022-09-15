@@ -224,7 +224,12 @@ jobs:
       - run:
           name: Run migrations
           command: |
+            
+            echo $TYPEORM_MIGRATIONS_DIR
+            echo $TYPEORM_ENTITIES
+            echo $TYPEORM_MIGRATIONS
             cd backend
+            pwd
             npm install
             sudo npm install -g typescript 
             npm run premigrations
