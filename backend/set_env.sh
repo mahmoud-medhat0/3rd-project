@@ -8,4 +8,4 @@ set TYPEORM_HOST=localhost
 set TYPEORM_PORT=5532
 set TYPEORM_USERNAME=postgres
 set TYPEORM_PASSWORD=password
-set TYPEORM_DATABASE=glee
+set TYPEORM_DATABASE=postgres

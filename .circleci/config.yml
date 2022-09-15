@@ -195,7 +195,7 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      - destroy-environment
+      #- destroy-environment
 
   configure-infrastructure:
     docker:
@@ -224,7 +224,7 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            cd backend
+            cd web/backend
             npm install
             npm run premigrations
             npm run migrations
@@ -323,7 +323,7 @@ jobs:
       - run:
           name: Frontend smoke test.
           command: |
-            URL="http://rdproject-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"
+            URL="https://rdproject-${CIRCLE_WORKFLOW_ID:0:7}.s3.amazonaws.com/index.html#/employees"
             echo ${URL}
             if curl -s ${URL} | grep "Welcome"
             then
@@ -333,6 +333,24 @@ jobs:
             fi
       # - destroy-environment
 
+  cloudfront-update:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - install_awscli
+      - install_nodejs
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            aws cloudformation deploy \
+            --template-file .circleci/files/cloudfront.yml \
+            --stack-name  initializ\
+             --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}"  \
+            --tags project=rdproject
+      # Here's where yozu will add some code to rollback on failure
+      #- destroy-environment
+      #- revert-migrations
 #   cloudfront-update:
 #     docker:
 #       # Docker image here that supports AWS CLI
