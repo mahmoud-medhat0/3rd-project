@@ -310,9 +310,6 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            pwd
-            ls
-            cat inventory.txt
             export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
             export API_URL="http://${BACKEND_PUBLIC_IP}:3030"
