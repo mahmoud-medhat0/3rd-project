@@ -226,6 +226,7 @@ jobs:
           command: |
             cd backend
             npm install
+            sudo npm install -g typescript 
             npm run premigrations
             npm run migrations
       # - run:
@@ -414,7 +415,7 @@ workflows:
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     requires: [smoke-test]
+      - cloudfront-update:
+          requires: [smoke-test]
       # - cleanup:
       #     requires: [cloudfront-update]
