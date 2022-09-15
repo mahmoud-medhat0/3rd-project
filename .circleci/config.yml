@@ -224,10 +224,9 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            
-            echo $TYPEORM_MIGRATIONS_DIR
-            echo $TYPEORM_ENTITIES
-            echo $TYPEORM_MIGRATIONS
+            export TYPEORM_MIGRATIONS_DIR=./migrations
+            export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
+            export TYPEORM_MIGRATIONS=./migrations/*.ts
             cd backend
             pwd
             npm install
