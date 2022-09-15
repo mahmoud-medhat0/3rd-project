@@ -22,13 +22,12 @@
 - name: Start the app
   shell: |
     export TYPEORM_ENTITIES=${TYPEORM_ENTITIES}
-    echo $TYPEORM_ENTITIES
-    export TYPEORM_HOST=rdproject2.cgu3cynp9k0j.us-east-1.rds.amazonaws.com
-    export TYPEORM_PORT=5432
-    export TYPEORM_USERNAME=postgres
-    export TYPEORM_PASSWORD=postgres
-    export TYPEORM_DATABASE=glee
-    export TYPEORM_MIGRATIONS_DIR=./backend/dist/migrations
-    export TYPEORM_MIGRATIONS=./backend/dist/migrations/*.ts
+    export TYPEORM_HOST=${TYPEORM_HOST}
+    export TYPEORM_PORT=${TYPEORM_PORT}
+    export TYPEORM_USERNAME=${TYPEORM_USERNAME}
+    export TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
+    export TYPEORM_DATABASE=${TYPEORM_DATABASE}
+    export TYPEORM_MIGRATIONS_DIR=${TYPEORM_MIGRATIONS_DIR}
+    export TYPEORM_MIGRATIONS=${TYPEORM_MIGRATIONS}
     sudo npm install pm2 -g
     node /home/ubuntu/backend/dist/main.js
