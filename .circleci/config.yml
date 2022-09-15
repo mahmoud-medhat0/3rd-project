@@ -216,11 +216,11 @@ jobs:
 
   run-migrations:
     docker:
-      - image: cimg/node:13.8.0
+      - image: mareimorsy/aws-node
     steps:
       - checkout
-      - install_awscli
-      - install_nodejs
+      #- install_awscli
+      #- install_nodejs
       - run:
           name: Run migrations
           command: |
