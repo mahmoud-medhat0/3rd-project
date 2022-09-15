@@ -289,8 +289,8 @@ jobs:
           name: Deploy backend
           command: |
             cd ~/project
-            export TYPEORM_HOST=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-            echo $TYPEORM_HOST >> .circleci/ansible/inventory.txt
+            export intance=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+            echo $intance >> .circleci/ansible/inventory.txt
             cd ~/project/
             tar -czf artifact.tar.gz backend/* 
             ls
