@@ -231,6 +231,7 @@ jobs:
             pwd
             npm install
             sudo npm install -g typescript 
+            npm run build
             npm run premigrations
             npm run migrations
       # - run:
