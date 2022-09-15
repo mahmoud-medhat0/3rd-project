@@ -224,7 +224,7 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            cd web/backend
+            cd backend
             npm install
             npm run premigrations
             npm run migrations
@@ -314,7 +314,9 @@ jobs:
             echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
             export API_URL="http://${BACKEND_PUBLIC_IP}:3030"
             echo "${API_URL}"
-            if curl "$API_URL/api/status" | grep "ok"
+            export API_URL1="http://${BACKEND_PUBLIC_IP}:3030/api/status"
+            echo "${API_URL1}"
+            if curl ${API_URL1} | grep "ok"
             then
                 exit 0
             else
