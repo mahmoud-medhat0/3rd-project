@@ -271,14 +271,18 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-            echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" 
-            # Build the frontend
+            export Back_End_IP=$(aws ec2 describe-instances      --query 'Reservations[*].Instances[*].PublicIpAddress' --filters 'Name=tag:project,Values=*' --output text)
+            echo "http://${Back_End_IP}:3030" 
+            echo API_URL="http://${Back_End_IP}:3030" >> frontend/.env
+            cat frontend/.env
+      - run:
+          name: deploy backend objects
+          command: |
             cd frontend
-            echo "API_URL=http://$BACKEND_PUBLIC_IP:3030" > .env
             npm install
             npm run build:prod
-            aws s3 cp dist s3://rdproject-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+            aws s3 cp dist s3://cdond-c3-project-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # - destroy-environment
       # - revert-migrations
 
@@ -332,6 +336,7 @@ jobs:
             echo "${API_URL}"
             export API_URL1="http://${BACKEND_PUBLIC_IP}:3030/api/status"
             echo "${API_URL1}"
+            sleep 1.5
             if curl ${API_URL1} | grep "ok"
             then
                 exit 0
