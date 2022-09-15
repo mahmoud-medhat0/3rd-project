@@ -291,11 +291,13 @@ jobs:
             cd ~/project
             export TYPEORM_HOST=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             echo $TYPEORM_HOST >> .circleci/ansible/inventory.txt
-            tar -czf artifact.tar.gz backend/*
-            cp artifact.tar.gz ~/project/.circleci/ansible/roles/deploy/artifact.tar.gz
-            #ls ../.circleci/ansible/roles/deploy/
-            cd ../.circleci/ansible
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt deploy-backend.yml
+            cd ~/project/
+            tar -czf artifact.tar.gz backend/* 
+            ls
+            cd ~/project/
+            cp artifact.tar.gz .circleci/ansible/roles/deploy_backend/files
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt deploy-backend.yml
 
       # Here's where you will add some code to rollback on failure
 
