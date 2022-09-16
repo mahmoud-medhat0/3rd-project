@@ -35,7 +35,5 @@ Resources:
       KeyName: rdproject
       ImageId: ami-052efd3df9dad4825
       Tags:
-        - Key: Name
-          Value: !Sub backend-${ID}
-        # - key: rdproject
-        #   Value: premethious
+        - Key: rdproject
+          Value: !Sub backend-${ID} 
