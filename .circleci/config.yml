@@ -312,9 +312,6 @@ jobs:
             ls
             cp artifact.tar.gz .circleci/ansible/roles/deploy_backend/files
             cd .circleci/ansible
-            sudo apt update -y
-            sudo apt install npm -y
-            sudo npm i -g pm2
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt deploy-backend.yml
 
 
