@@ -21,3 +21,4 @@
 
   roles:
     - deploy_backend
+    - configure-server
