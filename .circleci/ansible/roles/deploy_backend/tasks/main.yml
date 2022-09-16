@@ -8,12 +8,12 @@
   unarchive:
     src: artifact.tar.gz
     dest: ~/web
-- name: install npm & pm2
-  shell: |
-    sudo apt update
-    sudo apt install npm -y
-    npm install pm2 -g
-    npm i
+# - name: install npm & pm2
+#   shell: |
+#     sudo apt update
+#     sudo apt install npm -y
+#     npm install pm2 -g
+#     npm i
 
 
 - name: Executing node
@@ -29,10 +29,10 @@
     echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> .env
     echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> .env
     echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> .env
-    sudo apt update -y
-    curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-    sudo apt-get install -y nodejs    
-    npm install pm2 -g
+    # sudo apt update -y
+    # curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+    # sudo apt-get install -y nodejs    
+    # npm install pm2 -g
     npm install
     npm run build
     pm2 stop default
