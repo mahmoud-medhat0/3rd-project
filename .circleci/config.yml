@@ -310,7 +310,6 @@ jobs:
             cd ~/project/
             tar -czf artifact.tar.gz backend/* 
             ls
-            cd ~/project/
             cp artifact.tar.gz .circleci/ansible/roles/deploy_backend/files
             cd .circleci/ansible
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt deploy-backend.yml
