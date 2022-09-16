@@ -11,7 +11,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub rdproject-${ID}
-      GroupDescription: Allow port 22 and port 3030.
+      GroupDescription: Allow port 22,9100 and port 3030.
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
@@ -38,4 +38,4 @@ Resources:
         - Key: Name
           Value: !Sub backend-${ID}
         - key: rdproject
-          Value: rdproject
+          Value: premethious
