@@ -81,7 +81,6 @@ jobs:
           name: Build front-end
           command: |
             cd frontend
-            npm update
             npm install
             npm run build
       - save_cache:
@@ -268,7 +267,6 @@ jobs:
           name: Install dependencies
           command: |
             cd frontend
-            npm update
             npm install
             npm audit fix --audit-level=critical --force
       - run:
